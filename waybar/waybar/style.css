@@ -1,0 +1,113 @@
+/* Gruvbox Dark theme for Waybar */
+@import "/home/w1ce/.config/wallust/waybar-colors.css";
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font","Symbols Nerd Font", monospace;
+    font-size: 15px;
+    min-height: 0;
+}
+
+button {
+    box-shadow: inset 0 -3px transparent;
+    border: none;
+    border-radius: 0;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    background-color: transparent;
+    color: #a89984;
+}
+
+#workspaces button:hover {
+    background: #3c3836;
+    color: #ebdbb2;
+}
+
+#workspaces button.focused {
+    background-color: #fe8019;
+    color: #282828;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background-color: #fb4934;
+    color: #282828;
+}
+
+#mode {
+    background-color: #fe8019;
+    color: #282828;
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+#clock {
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+#cpu {
+    padding: 0 10px;
+}
+
+#memory {
+    padding: 0 10px;
+}
+
+#network {
+    padding: 0 10px;
+}
+
+#network.disconnected {
+    color: #fb4934;
+}
+
+#pulseaudio {
+    padding: 0 10px;
+}
+
+#pulseaudio.muted {
+    color: #928374;
+}
+
+#tray {
+    padding: 0 10px;
+}
+
+#tray > .passive {
+    opacity: 0.6;
+}
+
+#tray > .needs-attention {
+    opacity: 1.0;
+    background-color: #fb4934;
+}
+
+tooltip {
+    background: #3c3836;
+    border: 1px solid #504945;
+    border-radius: 5px;
+    color: #ebdbb2;
+}
+
+tooltip label {
+    color: #ebdbb2;
+}
+
+#custom-notification {
+    padding: 0 10px;
+}
+
+#custom-notification.notification {
+    color: #fe8019;
+}
+
+#custom-notification.dnd {
+    color: #928374;
+}
+
+#custom-notification.dnd-notification {
+    color: #fb4934;
+}

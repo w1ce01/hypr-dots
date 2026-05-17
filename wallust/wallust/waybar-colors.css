@@ -1,0 +1,7 @@
+window#waybar { background-color: #060400; color: #FF6252; }
+#cpu { color: #7C86A2; border-bottom: 3px solid #7C86A2; }
+#memory { color: #B12395; border-bottom: 3px solid #B12395; }
+#network { color: #EE1017; border-bottom: 3px solid #EE1017; }
+#pulseaudio { color: #DB8ACA; border-bottom: 3px solid #DB8ACA; }
+#clock { color: #FF6252; border-bottom: 3px solid #95452E; }
+#custom-notification { color: #D4863D; border-bottom: 3px solid #D4863D; }
