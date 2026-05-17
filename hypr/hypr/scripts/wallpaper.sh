@@ -18,6 +18,36 @@ C6=$(cat "$CACHE" | grep '"color6"' | cut -d'"' -f4)
 BORDER=$C1
 hyprctl keyword general:col.active_border "rgb(${BORDER//\#/})"
 
+cat > ~/.config/fuzzel/fuzzel.ini << EOF
+[main]
+font=JetBrains Mono Nerd Font:size=12
+prompt="> "
+lines=15
+width=50
+horizontal-pad=20
+vertical-pad=10
+inner-pad=10
+[colors]
+background=${BG//\#/}ff
+text=${FG//\#/}ff
+match=${C1//\#/}ff
+selection=${C2//\#/}ff
+selection-match=${C3//\#/}ff
+selection-text=${FG//\#/}ff
+border=${C4//\#/}ff
+[border]
+width=2
+radius=0
+[dmenu]
+mode=text
+EOF
+
+sed -i "s/background-color: #[0-9a-fA-F]*/background-color: $BG/g" ~/.config/swaync/style.css
+sed -i "s/color: #[0-9a-fA-F]*/color: $FG/g" ~/.config/swaync/style.css
+pkill swaync
+swaync &
+disown
+
 cat > ~/.config/wallust/waybar-colors.css << EOF
 window#waybar { background-color: $BG; color: $FG; }
 #cpu { color: $C2; border-bottom: 3px solid $C2; }
