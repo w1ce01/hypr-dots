@@ -47,6 +47,9 @@ button {
     padding: 0 10px;
     font-weight: bold;
 }
+#language {
+    padding: 0 10px;
+}
 
 #cpu {
     padding: 0 10px;

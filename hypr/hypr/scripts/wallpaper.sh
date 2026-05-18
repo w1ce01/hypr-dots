@@ -14,6 +14,15 @@ C3=$(cat "$CACHE" | grep '"color3"' | cut -d'"' -f4)
 C4=$(cat "$CACHE" | grep '"color4"' | cut -d'"' -f4)
 C5=$(cat "$CACHE" | grep '"color5"' | cut -d'"' -f4)
 C6=$(cat "$CACHE" | grep '"color6"' | cut -d'"' -f4)
+C7=$(cat "$CACHE" | grep '"color7"' | cut -d'"' -f4)
+C8=$(cat "$CACHE" | grep '"color8"' | cut -d'"' -f4)
+C9=$(cat "$CACHE" | grep '"color9"' | cut -d'"' -f4)
+C10=$(cat "$CACHE" | grep '"color10"' | cut -d'"' -f4)
+C11=$(cat "$CACHE" | grep '"color11"' | cut -d'"' -f4)
+C12=$(cat "$CACHE" | grep '"color12"' | cut -d'"' -f4)
+C13=$(cat "$CACHE" | grep '"color13"' | cut -d'"' -f4)
+C14=$(cat "$CACHE" | grep '"color14"' | cut -d'"' -f4)
+C15=$(cat "$CACHE" | grep '"color15"' | cut -d'"' -f4)
 
 BORDER=$C1
 hyprctl keyword general:col.active_border "rgb(${BORDER//\#/})"
@@ -42,8 +51,34 @@ radius=0
 mode=text
 EOF
 
-sed -i "s/background-color: #[0-9a-fA-F]*/background-color: $BG/g" ~/.config/swaync/style.css
-sed -i "s/color: #[0-9a-fA-F]*/color: $FG/g" ~/.config/swaync/style.css
+cat > ~/.config/alacritty/colors.toml << EOF
+[colors.primary]
+background = "$BG"
+foreground = "$FG"
+
+[colors.normal]
+black   = "$BG"
+red     = "$C1"
+green   = "$C2"
+yellow  = "$C3"
+blue    = "$C4"
+magenta = "$C5"
+cyan    = "$C6"
+white   = "$FG"
+
+[colors.bright]
+black   = "$C1"
+red     = "$C1"
+green   = "$C2"
+yellow  = "$C3"
+blue    = "$C4"
+magenta = "$C5"
+cyan    = "$C6"
+white   = "$FG"
+EOF
+
+# Обновляем цвет фона swaync
+sed -i "s/background-color: #[0-9a-fA-F]\{6\}/background-color: $BG/g" ~/.config/swaync/style.css
 pkill swaync
 swaync &
 disown
@@ -51,6 +86,7 @@ disown
 cat > ~/.config/wallust/waybar-colors.css << EOF
 window#waybar { background-color: $BG; color: $FG; }
 #cpu { color: $C2; border-bottom: 3px solid $C2; }
+#language { color: $C3; border-bottom: 3px solid $C3; }
 #memory { color: $C4; border-bottom: 3px solid $C4; }
 #network { color: $C6; border-bottom: 3px solid $C6; }
 #pulseaudio { color: $C5; border-bottom: 3px solid $C5; }
@@ -58,6 +94,7 @@ window#waybar { background-color: $BG; color: $FG; }
 #custom-notification { color: $C3; border-bottom: 3px solid $C3; }
 EOF
 
+touch ~/.config/alacritty/colors.toml
 pkill waybar
 sleep 0.5
 waybar &

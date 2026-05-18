@@ -6,8 +6,8 @@
     "spacing": 2,
     "modules-left": ["hyprland/workspaces", "hyprland/submap"],
     "modules-center": ["clock"],
-    "modules-right": ["custom/notification", "cpu", "memory", "pulseaudio", "network", "tray"],
-    
+    "modules-right": ["custom/notification", "hyprland/language", "cpu", "memory", "pulseaudio", "network", "tray"],
+         
     "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -100,5 +100,9 @@
         "on-click": "sleep 0.1 && swaync-client -t -sw",
         "on-click-right": "sleep 0.1 && swaync-client -d -sw",
         "escape": true
+    },
+    "hyprland/language": {
+        "format": " {}",
+        "short-keys": true
     }
 }

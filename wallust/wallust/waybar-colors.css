@@ -1,7 +1,8 @@
-window#waybar { background-color: #040409; color: #5CFD4C; }
-#cpu { color: #132C1B; border-bottom: 3px solid #132C1B; }
-#memory { color: #187626; border-bottom: 3px solid #187626; }
-#network { color: #0FC710; border-bottom: 3px solid #0FC710; }
-#pulseaudio { color: #ADB14C; border-bottom: 3px solid #ADB14C; }
-#clock { color: #5CFD4C; border-bottom: 3px solid #242039; }
-#custom-notification { color: #746030; border-bottom: 3px solid #746030; }
+window#waybar { background-color: #010508; color: #76F6CC; }
+#cpu { color: #523F54; border-bottom: 3px solid #523F54; }
+#language { color: #15825F; border-bottom: 3px solid #15825F; }
+#memory { color: #7D87BA; border-bottom: 3px solid #7D87BA; }
+#network { color: #42C69F; border-bottom: 3px solid #42C69F; }
+#pulseaudio { color: #519FB0; border-bottom: 3px solid #519FB0; }
+#clock { color: #76F6CC; border-bottom: 3px solid #00412F; }
+#custom-notification { color: #15825F; border-bottom: 3px solid #15825F; }

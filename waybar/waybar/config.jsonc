@@ -18,7 +18,7 @@
         "clock"
     ],
     "modules-right": [
-        "sway/language",
+        "hyprland/language",
         "pulseaudio",
         "power-profiles-daemon",
         "cpu",
@@ -204,6 +204,10 @@
   "format": "\uf011",
   "tooltip": false,
   "on-click": "~/.config/waybar/power.sh"
+}
+"hyprland/language": {
+    "format": " {}",
+    "short-keys": true
 }
 
 }
