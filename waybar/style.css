@@ -1,5 +1,5 @@
-
-@import "/home/w1ce/.config/wallust/waybar-colors.css";
+* Import dynamic colors from wallust */
+@import url("~/.config/wallust/waybar.css");
 * {
     border: none;
     border-radius: 0;
