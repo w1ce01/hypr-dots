@@ -5,7 +5,7 @@ Hyprland + Waybar + Wallust (dynamic colors from wallpaper)
 ## Stack
 - WM: Hyprland
 - Bar: Waybar
-- Terminal: Foot
+- Terminal: Alacritty
 - Launcher: Fuzzel
 - Notifications: SwayNC
 - Wallpaper: Waypaper + swww
