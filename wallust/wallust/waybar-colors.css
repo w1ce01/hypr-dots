@@ -1,8 +1,0 @@
-window#waybar { background-color: #010508; color: #76F6CC; }
-#cpu { color: #523F54; border-bottom: 3px solid #523F54; }
-#language { color: #15825F; border-bottom: 3px solid #15825F; }
-#memory { color: #7D87BA; border-bottom: 3px solid #7D87BA; }
-#network { color: #42C69F; border-bottom: 3px solid #42C69F; }
-#pulseaudio { color: #519FB0; border-bottom: 3px solid #519FB0; }
-#clock { color: #76F6CC; border-bottom: 3px solid #00412F; }
-#custom-notification { color: #15825F; border-bottom: 3px solid #15825F; }
