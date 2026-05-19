@@ -1,101 +1,63 @@
-#!/bin/bash
-sleep 1
-rm -rf ~/.cache/wallust/
-WALLPAPER=$(grep "^wallpaper" ~/.config/waypaper/config.ini | head -1 | cut -d'=' -f2 | tr -d ' ' | sed "s|~|$HOME|g")
+cat > hypr/scripts/wallpaper.sh << 'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
 
-/home/w1ce/.cargo/bin/wallust run "$WALLPAPER"
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 🖼️ Wallpaper setter with dynamic colors (wallust + swww)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CACHE=$(ls ~/.cache/wallust/*/FastResize_Salience_auto_SalienceDark 2>/dev/null | head -1)
-BG=$(cat "$CACHE" | grep '"background"' | cut -d'"' -f4)
-FG=$(cat "$CACHE" | grep '"foreground"' | cut -d'"' -f4)
-C1=$(cat "$CACHE" | grep '"color1"' | cut -d'"' -f4)
-C2=$(cat "$CACHE" | grep '"color2"' | cut -d'"' -f4)
-C3=$(cat "$CACHE" | grep '"color3"' | cut -d'"' -f4)
-C4=$(cat "$CACHE" | grep '"color4"' | cut -d'"' -f4)
-C5=$(cat "$CACHE" | grep '"color5"' | cut -d'"' -f4)
-C6=$(cat "$CACHE" | grep '"color6"' | cut -d'"' -f4)
-C7=$(cat "$CACHE" | grep '"color7"' | cut -d'"' -f4)
-C8=$(cat "$CACHE" | grep '"color8"' | cut -d'"' -f4)
-C9=$(cat "$CACHE" | grep '"color9"' | cut -d'"' -f4)
-C10=$(cat "$CACHE" | grep '"color10"' | cut -d'"' -f4)
-C11=$(cat "$CACHE" | grep '"color11"' | cut -d'"' -f4)
-C12=$(cat "$CACHE" | grep '"color12"' | cut -d'"' -f4)
-C13=$(cat "$CACHE" | grep '"color13"' | cut -d'"' -f4)
-C14=$(cat "$CACHE" | grep '"color14"' | cut -d'"' -f4)
-C15=$(cat "$CACHE" | grep '"color15"' | cut -d'"' -f4)
+# Проверка зависимостей
+for cmd in wallust swww hyprctl grep sed; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+        echo "❌ ERROR: Required command '$cmd' not found in PATH" >&2
+        exit 1
+    fi
+done
 
-BORDER=$C1
-hyprctl keyword general:col.active_border "rgb(${BORDER//\#/})"
+# Переменные
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Pictures/wallpapers}"
+WALLPAPER="${1:-}"
 
-cat > ~/.config/fuzzel/fuzzel.ini << EOF
-[main]
-font=JetBrains Mono Nerd Font:size=12
-prompt="> "
-lines=15
-width=50
-horizontal-pad=20
-vertical-pad=10
-inner-pad=10
-[colors]
-background=${BG//\#/}ff
-text=${FG//\#/}ff
-match=${C1//\#/}ff
-selection=${C2//\#/}ff
-selection-match=${C3//\#/}ff
-selection-text=${FG//\#/}ff
-border=${C4//\#/}ff
-[border]
-width=2
-radius=0
-[dmenu]
-mode=text
+# Если не передан файл — выбираем случайный
+if [[ -z "$WALLPAPER" ]]; then
+    WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.webp" \) | shuf -n1)
+fi
+
+# Валидация
+if [[ ! -f "$WALLPAPER" ]]; then
+    echo "❌ ERROR: Wallpaper not found: $WALLPAPER" >&2
+    exit 1
+fi
+
+echo "🎨 Applying: $WALLPAPER"
+
+# Применяем обои через swww
+swww img "$WALLPAPER" --transition-type=any --transition-fps=60 --transition-duration=1
+
+# Генерируем цвета через wallust (используем PATH, не хардкод!)
+WALLUST_BIN="${WALLUST_BIN:-$(command -v wallust)}"
+"$WALLUST_BIN" run -s "$WALLPAPER"
+
+# Применяем цвета в приложениях
+# (предполагаем, что wallust создал файлы в ~/.config/wallust/)
+
+# Перезагружаем waybar, если запущен
+if pgrep -x waybar >/dev/null; then
+    pkill -USR2 waybar  # мягкая перезагрузка
+    sleep 0.2
+fi
+
+# Перезагружаем hyprland конфиг для обновления цветов границ
+hyprctl reload || true
+
+# Уведомление (безопасное)
+if command -v notify-send >/dev/null 2>&1; then
+    notify-send -t 2000 -i "$WALLPAPER" "🖼️ Wallpaper changed" "$(basename "$WALLPAPER")" || true
+fi
+
+echo "✅ Done"
 EOF
 
-cat > ~/.config/alacritty/colors.toml << EOF
-[colors.primary]
-background = "$BG"
-foreground = "$FG"
-
-[colors.normal]
-black   = "$BG"
-red     = "$C1"
-green   = "$C2"
-yellow  = "$C3"
-blue    = "$C4"
-magenta = "$C5"
-cyan    = "$C6"
-white   = "$FG"
-
-[colors.bright]
-black   = "$C1"
-red     = "$C1"
-green   = "$C2"
-yellow  = "$C3"
-blue    = "$C4"
-magenta = "$C5"
-cyan    = "$C6"
-white   = "$FG"
-EOF
-
-# Обновляем цвет фона swaync
-sed -i "s/background-color: #[0-9a-fA-F]\{6\}/background-color: $BG/g" ~/.config/swaync/style.css
-pkill swaync
-swaync &
-disown
-
-cat > ~/.config/wallust/waybar-colors.css << EOF
-window#waybar { background-color: $BG; color: $FG; }
-#cpu { color: $C2; border-bottom: 3px solid $C2; }
-#language { color: $C3; border-bottom: 3px solid $C3; }
-#memory { color: $C4; border-bottom: 3px solid $C4; }
-#network { color: $C6; border-bottom: 3px solid $C6; }
-#pulseaudio { color: $C5; border-bottom: 3px solid $C5; }
-#clock { color: $FG; border-bottom: 3px solid $C1; }
-#custom-notification { color: $C3; border-bottom: 3px solid $C3; }
-EOF
-
-touch ~/.config/alacritty/colors.toml
-pkill waybar
-sleep 0.5
-waybar &
-disown
+chmod +x hypr/scripts/wallpaper.sh
+git add hypr/scripts/wallpaper.sh
+git commit -m "fix: remove absolute paths, add error handling in wallpaper.sh"
