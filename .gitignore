@@ -1,0 +1,49 @@
+cat > .gitignore << 'EOF'
+# ─────────────────────────────────────────────────
+# 📦 EDITOR & IDE
+# ─────────────────────────────────────────────────
+*.swp
+*.swo
+*~
+.DS_Store
+.idea/
+.vscode/
+*.sublime-*
+
+# ─────────────────────────────────────────────────
+# 🗑️ CACHE & LOGS
+# ─────────────────────────────────────────────────
+*.log
+*.tmp
+.cache/
+__pycache__/
+*.pyc
+*.pid
+*.sock
+
+# ─────────────────────────────────────────────────
+# 🔧 OS & HIDDEN
+# ─────────────────────────────────────────────────
+Thumbs.db
+.AppleDouble
+.LSOverride
+.directory
+
+# ─────────────────────────────────────────────────
+# 🏠 DOTFILES SPECIFIC
+# ─────────────────────────────────────────────────
+*.local
+*.override
+secrets.*
+.env
+.env.*
+*.bak
+*.backup
+*.old
+*.save
+
+# Generated configs (wallust, hyprctl outputs)
+colors-hyprland.conf
+wallust/wallust/
+waybar/waybar/
+EOF
